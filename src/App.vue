@@ -79,7 +79,7 @@ const scrollToVideos = () => {
   });
 };
 
-const scrollToЕщз = () => {
+const scrollToTop = () => {
   nextTick(() => {
     window.scrollTo({
       top: 0, // Прокручиваем к верху страницы
@@ -93,6 +93,7 @@ const onSelect = async (video: Video) => {
   isLoaded.value = false;
   try {
     await fetchRelatedVideos(video.video_id);
+    scrollToTop()
   } catch (error) {
     console.log(error);
   } finally {
