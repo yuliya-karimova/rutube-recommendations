@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 text-white p-4 rounded-xl flex flex-col gap-1 text-xs"
+    class="bg-gray-800 text-white p-4 rounded-xl flex flex-col gap-1 text-xs"
   >
     <div class="line-clamp-2 font-bold text-base mb-1">{{ video.title }}</div>
     <div class="text-gray-500 line-clamp-2">

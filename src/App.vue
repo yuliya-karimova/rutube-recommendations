@@ -8,18 +8,20 @@
         Сервис подбора рекомендаций
       </div>
     </div>
-    <div class="py-8 px-4 xl:px-8 flex flex-col gap-4">
-      <div v-if="currentVideo" class="mb-8">
+    <div class="py-8 px-4 xl:px-8">
+      <div v-if="currentVideo" class="mb-4">
         <VideoCardFull :video="currentVideo" @react="onReact" />
       </div>
-      <div>
+      <div ref="videoList" class="py-4">
         {{ currentVideo ? "Похожие видео:" : "Выберите понравившееся видео:" }}
       </div>
-      <div ref="videoList">
-        <BaseSpinner v-if="!isLoaded" />
+      <div>
+        <div v-if="!isLoaded" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div v-for="n in 10" :key="n" class="skeleton"></div>
+        </div>
         <div
           v-else-if="recommendedVideos.length"
-          class="grid grid-cols-2 xl:grid-cols-3 gap-4"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >
           <VideoCard
             v-for="video in recommendedVideos"
@@ -30,22 +32,6 @@
           />
         </div>
       </div>
-      <!-- <VideoCard
-        v-if="currentVideo"
-        :video="currentVideo"
-        @Reaction="onReaction"
-      />
-      <Recommendations
-        :videos="recommendedVideos"
-        @video-selected="onVideoSelected"
-      />
-      <button @click="toggleReactionsLog" class="mt-4">
-        Показать/Скрыть Лог Взаимодействий
-      </button>
-      <div v-if="showReactionsLog" class="Reactions-log">
-        <h3>Лог Взаимодействий</h3>
-        <pre>{{ Reactions }}</pre>
-      </div> -->
     </div>
   </div>
 </template>
@@ -54,7 +40,6 @@
 import { ref, onMounted, nextTick } from "vue";
 import VideoCard from "./components/VideoCard.vue";
 import VideoCardFull from "./components/VideoCardFull.vue";
-import BaseSpinner from "./components/BaseSpinner.vue";
 import { useRecommendations } from "./composables/useRecommendations";
 import type { Video, Reaction } from "./types";
 
@@ -68,6 +53,7 @@ const {
 const currentVideo = ref<Video | null>(null);
 const isLoaded = ref(false);
 const videoList = ref<HTMLElement | null>(null);
+const isReactionSet = ref(false);
 
 const scrollToVideos = () => {
   nextTick(() => {
@@ -89,10 +75,18 @@ const scrollToTop = () => {
 };
 
 const onSelect = async (video: Video) => {
+  if (currentVideo.value && !isReactionSet.value) {
+    await onReact({ video_id: currentVideo.value.video_id, type: "dislike" });
+    currentVideo.value = video;
+    isReactionSet.value = false;
+    return;
+  }
+
+  isReactionSet.value = false;
   currentVideo.value = video;
   isLoaded.value = false;
   try {
-    scrollToTop()
+    scrollToTop();
     await fetchRelatedVideos(video.video_id);
   } catch (error) {
     console.log(error);
@@ -102,6 +96,7 @@ const onSelect = async (video: Video) => {
 };
 
 const onReact = async (reaction: Reaction) => {
+  isReactionSet.value = true;
   isLoaded.value = false;
   try {
     await fetchRecommendedVideos(reaction);
@@ -128,3 +123,26 @@ onMounted(() => {
   load();
 });
 </script>
+
+<style scoped>
+.skeleton {
+  background-color: #1b273d;
+  border-radius: 0.75rem;
+  animation: pulse 1.5s infinite ease-in-out;
+  height: 200px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #1b273d;
+  }
+  50% {
+    background-color: #2f4060;
+  }
+  100% {
+    background-color: #1b273d;
+  }
+}
+</style>
