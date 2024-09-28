@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  background-color: #111827;
+  min-height: 100vh;
+}
+
+a {
+  color: #38bdf8;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #7dd3fc;
+}

@@ -1,52 +1,99 @@
 // src/composables/useRecommendations.ts
-import { ref } from 'vue'
-import type { Video, Interaction } from '../types'
+import { ref } from "vue";
+import type { Reaction, Video } from "../types";
+
+const fakeVideo = [
+  {
+    video_id: "973f24c0-15b2-434f-8740-4e2726f79c30",
+    title:
+      "ЗИМНЯЯ, ТЕПЛАЯ ШЛЯПА крючком. Как связать поля шляпы. Видео для начинающих",
+    description:
+      "Шляпа связана из пряжи NAKO Sport Wool в 100гр.-120м., крючок 5мм., расход пряжи на шляпу 200гр.  Ссылка на шапочку",
+    category_id: "Полезное",
+    v_pub_datetime: "2024-06-15T19:58:03.000Z",
+    v_total_comments: 5,
+    v_year_views: 120,
+    v_likes: 43,
+    v_dislikes: 3,
+    v_duration: 379,
+    author_id: "9afa94aa-c2a6-43fc-a0d1-175eaf7fa194",
+  },
+  {
+    video_id: "sadav-15b2-saf4234-8740-4e2726f79c30",
+    title: "Рафтинг Марафон 2024",
+    description:
+      "Рафтинг Марафон 2024 ВК:https://vk.com/dmitriy.kolos YouTube:https://www.youtube.com/@Krasnoyarsk1313/featured",
+    category_id: "Путешествия",
+    v_pub_datetime: "2023-08-15T19:58:03.000Z",
+    v_total_comments: 242,
+    v_year_views: 35353,
+    v_likes: 423,
+    v_dislikes: 0,
+    v_duration: 523,
+    author_id: "34324-c2a6-dsad-a0d1-175eaf7fa194",
+  },
+  {
+    video_id: "324-15b2-saf4234-8740-4e2726f79c30",
+    title: "СПАСТИСЬ ОТ АКУЛЫ НА КОРАБЛЕ - SHARK SIEGE SURVIVAL [Первый взгляд]",
+    description:
+      "Прохождение игры SHARK SIEGE SURVIVAL. Меня зовут Михаил, рад видеть тебя на нашем с тобой канале, я люблю играть в игры и выкладываю по ним прохождения :)",
+    category_id: "Видеоигры",
+    v_pub_datetime: "2024-08-15T19:58:03.000Z",
+    v_total_comments: 1,
+    v_year_views: 12,
+    v_likes: 4,
+    v_dislikes: 12,
+    v_duration: 4243,
+    author_id: "4324234-c2a6-dsad-a0d1-175eaf7fa194",
+  },
+];
+
+const fakeVideos = [
+  ...fakeVideo,
+  ...fakeVideo,
+  ...fakeVideo,
+  fakeVideo[0],
+];
 
 export function useRecommendations() {
-  const userInterests = ref<string[]>([])
-  const recommendedVideos = ref<Video[]>([])
-  const interactions = ref<Interaction[]>([])
+  const recommendedVideos = ref<Video[]>([]);
 
-  // Инициализация рекомендаций на основе интересов
-  const initializeRecommendations = (interests: string[]) => {
-    userInterests.value = interests
-    // Здесь можно интегрировать алгоритм рекомендаций
-    recommendedVideos.value = fetchInitialRecommendations(interests)
-  }
+  const fetchInitialVideos = async (): Promise<Video[]> => {
+    console.log("🚀 ~ fetchInitialVideos ~ fetchInitialVideos:")
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        recommendedVideos.value = fakeVideos;
+        resolve(fakeVideos);
+      }, 300);
+    });
+  };
 
-  // Обработка взаимодействий
-  const handleInteraction = (interaction: Interaction) => {
-    interactions.value.push(interaction)
-    // Обновление рекомендаций на основе взаимодействий
-    updateRecommendations(interactions.value)
-  }
+  const fetchRecommendedVideos = async (
+    reaction: Reaction
+  ): Promise<Video[]> => {
+    console.log("🚀 ~ useRecommendations ~ reaction:", reaction)
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        recommendedVideos.value = fakeVideos;
+        resolve(fakeVideos);
+      }, 300);
+    });
+  };
 
-  // Пример функций для получения и обновления рекомендаций
-  const fetchInitialRecommendations = (interests: string[]): Video[] => {
-    // Здесь можно добавить логику получения видео на основе интересов
-    // Для примера используем статические данные
-    return [
-      {
-        id: '1',
-        title: 'Видео по интересам',
-        description: 'Описание видео',
-        url: 'https://www.w3schools.com/html/mov_bbb.mp4',
-        thumbnail: 'https://via.placeholder.com/120x90',
-      },
-      // Добавьте больше видео
-    ]
-  }
-
-  const updateRecommendations = (interactions: Interaction[]) => {
-    // Здесь можно добавить логику обновления рекомендаций
-    // Например, анализировать, какие видео пользователь смотрит больше
-    // и предлагать похожие
-  }
+  const fetchRelatedVideos = async (videoId: string): Promise<Video[]> => {
+    console.log("🚀 ~ fetchRelatedVideos ~ videoId:", videoId)
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        recommendedVideos.value = fakeVideos;
+        resolve(fakeVideos);
+      }, 300);
+    });
+  };
 
   return {
-    userInterests,
     recommendedVideos,
-    initializeRecommendations,
-    handleInteraction,
-  }
+    fetchInitialVideos,
+    fetchRecommendedVideos,
+    fetchRelatedVideos,
+  };
 }
