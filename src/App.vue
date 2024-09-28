@@ -92,8 +92,8 @@ const onSelect = async (video: Video) => {
   currentVideo.value = video;
   isLoaded.value = false;
   try {
-    await fetchRelatedVideos(video.video_id);
     scrollToTop()
+    await fetchRelatedVideos(video.video_id);
   } catch (error) {
     console.log(error);
   } finally {
