@@ -2,7 +2,7 @@
   <div id="app">
     <div class="bg-gray-800 py-6 px-4 xl:px-8 flex flex-col gap-2 items-center">
       <div class="w-48 xl:w-64 text-white">
-        <img src="./assets/rutube.svg" />
+        <img src="/rutube.svg" />
       </div>
       <div class="text-lg uppercase font-bold text-center">
         Сервис подбора рекомендаций
@@ -20,7 +20,7 @@
           <div v-for="n in 10" :key="n" class="skeleton"></div>
         </div>
         <div
-          v-else-if="recommendedVideos.length"
+          v-else-if="recommendedVideos?.length"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >
           <VideoCard
@@ -76,7 +76,7 @@ const scrollToTop = () => {
 
 const onSelect = async (video: Video) => {
   if (currentVideo.value && !isReactionSet.value) {
-    await onReact({ video_id: currentVideo.value.video_id, type: "dislike" });
+    await onReact({ video_id: currentVideo.value.video_id, type: "ignore" });
     currentVideo.value = video;
     isReactionSet.value = false;
     return;

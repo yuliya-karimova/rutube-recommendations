@@ -12,7 +12,7 @@ export interface Video {
   author_id: string;
 }
 
-export type ReactionType = 'like' | 'dislike'
+export type ReactionType = 'like' | 'dislike' | 'ignore'
 
 export interface Reaction {
   video_id: string

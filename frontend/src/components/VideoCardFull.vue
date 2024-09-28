@@ -18,7 +18,7 @@
         :class="userReaction === 'like' && 'bg-gray-700'"
         @click="emitReaction('like')"
       >
-        <img src="../assets/like.svg" class="w-6" />
+        <img src="/like.svg" class="w-6" />
         <div v-if="likes">{{ likes }}</div>
       </button>
       <button
@@ -26,7 +26,7 @@
         :class="userReaction === 'dislike' && 'bg-gray-700'"
         @click="emitReaction('dislike')"
       >
-        <img src="../assets/dislike.svg" class="w-6" />
+        <img src="/dislike.svg" class="w-6" />
         <div v-if="dislikes">{{ dislikes }}</div>
       </button>
     </div>
@@ -50,7 +50,7 @@ const userReaction = ref<ReactionType | null>(null);
 
 const formattedDate = computed(() => {
   return props.video.v_pub_datetime
-    ? dayjs(props.video.v_pub_datetime).format("YYYY-MM-DD")
+    ? dayjs(props.video.v_pub_datetime).format("DD-MM-YYYY")
     : "";
 });
 

@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/composables/userecommendations.ts","./src/types/index.d.ts","./src/app.vue","./src/components/videocard.vue","./src/components/videocardfull.vue"],"version":"5.6.2"}

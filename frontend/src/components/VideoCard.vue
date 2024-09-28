@@ -24,7 +24,7 @@ const props = defineProps<{
 
 const formattedDate = computed(() => {
   return props.video.v_pub_datetime
-    ? dayjs(props.video.v_pub_datetime).format("YYYY-MM-DD")
+    ? dayjs(props.video.v_pub_datetime).format("DD-MM-YYYY")
     : "";
 });
 </script>
