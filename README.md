@@ -39,16 +39,17 @@ FAISS (Facebook AI Similarity Search) используется для поиск
    - Ничего не ставить и просто выбрать одно из видео ниже - в таком случае мы это засчитываем как "пропуск/игнор", новое видео становится выбранным, выдача внизу обновляется и показывает похожие видео
  
 # Описание файловой структуры
-- frontend - содержит код фронтовой части приложения, проект написан на Vue + Pinia
-- backend - содержит код сервера, а также алгоритмов рекомендации, подробнее ниже.
+- [Обучение моделей.ipynb](https://github.com/yuliya-karimova/rutube-recommendations/blob/main/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B5%D0%B9.ipynb) - ноутбук с процессом индексирования FAISS и обучение модели SVD, также в ноутбуке представлена работа по очистке датасета и подробные комментарии процесса работы, показано создание эмбедингов для текста
+- [frontend](https://github.com/yuliya-karimova/rutube-recommendations/tree/main/frontend) - содержит код фронтовой части приложения, проект написан на Vue + Pinia
+- [backend](https://github.com/yuliya-karimova/rutube-recommendations/tree/main/backend) - содержит код сервера, а также алгоритмов рекомендации, подробнее ниже
 
 ### Подробнее о бэкенде и алгоритмах: 
-- файл app - отвечает за запуск сервера и обработку запросов
-- pop_video - подборки топ видео из каждой категории
-- modules/video - содержит алгоритмы поиска видео:
-    - get_top_videos - получение топа видео (по одному из каждой категории) для первой выдачи
-    - get_related_videos - получение списка видео, похожих на выбранное
-    - get_recommended_videos - получение списка видео в зависимости от реакции пользователя на видео - лайк, дизлайк или игнор (когда юзер просто листает на следующее)
+- [backend/app](https://github.com/yuliya-karimova/rutube-recommendations/blob/main/backend/app.py) - отвечает за запуск сервера и обработку запросов
+- [backend/pop_video](https://github.com/yuliya-karimova/rutube-recommendations/tree/main/backend/pop_video) - подборки топ видео из каждой категории
+- [backend/modules/video](https://github.com/yuliya-karimova/rutube-recommendations/blob/main/backend/modules/video.py) - содержит алгоритмы поиска видео:
+    - **get_top_videos** - получение топа видео (по одному из каждой категории) для первой выдачи
+    - **get_related_videos** - получение списка видео, похожих на выбранное
+    - **get_recommended_videos** - получение списка видео в зависимости от реакции пользователя на видео - лайк, дизлайк или игнор (когда юзер просто листает на следующее)
 
 Также в папке backend предполагаются следующие 3 файла, но они слишком большие для гитхаба, поэтому залиты на яндекс диск:
 - [df_indexed.pkl](https://disk.yandex.ru/d/FRFrLfUG2z-jJg) - датафрейм с информацией о видео
